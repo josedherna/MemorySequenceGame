@@ -18,6 +18,8 @@ public class StartScreen extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 500);
         stage.setMinWidth(320);
         stage.setMinHeight(490);
+        TitleController titleScreen = fxmlLoader.getController();
+        titleScreen.initializeTitleScreen();
         stage.setTitle("Remember the Tiles");
         stage.setScene(scene);
         stage.show();

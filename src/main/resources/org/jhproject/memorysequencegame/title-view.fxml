@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.jhproject.memorysequencegame.TitleController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox fx:id="titleParentVbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jhproject.memorysequencegame.TitleController">
+   <children>
+      <VBox fx:id="imageVbox" alignment="CENTER" VBox.vgrow="ALWAYS">
+         <children>
+            <ImageView fx:id="logoImageView" fitHeight="364.0" fitWidth="772.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </VBox>
+      <HBox prefHeight="50.0" style="-fx-background-color: red;" />
+   </children>
+</VBox>
