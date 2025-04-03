@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 
 /**
  * This class contains methods that will dynamically change the game's title
@@ -30,8 +30,7 @@ public class TitleController {
     @FXML
     private VBox imageVbox;
 
-    private final static String IMAGE_FILE = "/images/RTT_Logo.png";
-    private final static InputStream IMAGE_STREAM = TitleController.class.getResourceAsStream(IMAGE_FILE);
+    private final URL IMAGE_FILE = getClass().getResource("images/RTT_Logo.png");
     private boolean boundToWidth = true;
 
     /**
@@ -39,10 +38,10 @@ public class TitleController {
      * after one second.
      */
     @FXML
-    public void initialize() {
-        if (IMAGE_STREAM != null) {
+    private void initialize() {
+        if (IMAGE_FILE != null) {
             logoImageView.setVisible(false);
-            Image gameLogo = new Image(IMAGE_STREAM);
+            Image gameLogo = new Image(IMAGE_FILE.toExternalForm());
             logoImageView.setImage(gameLogo);
             Timeline switchToDifficultyScreen = getTimeline();
             switchToDifficultyScreen.play();
@@ -71,7 +70,7 @@ public class TitleController {
             imageVbox.widthProperty().addListener(imgVboxWidth);
         }));
         initializeProcess.getKeyFrames().add(new KeyFrame(Duration.seconds(1.2), _ -> {
-            FXMLLoader difficultyPage = new FXMLLoader(TitleController.class.getResource("selection-view.fxml"));
+            FXMLLoader difficultyPage = new FXMLLoader(getClass().getResource("selection-view.fxml"));
             Parent difficultyParent = null;
 
             try {
@@ -80,6 +79,7 @@ public class TitleController {
                 System.out.println("Error loading Difficulty Page");
             }
 
+            //Changes scene to difficulty selection screen.
             Scene currentScene = titleParentVbox.getScene();
             currentScene.setRoot(difficultyParent);
             imageVbox.widthProperty().removeListener(imgVboxWidth);
