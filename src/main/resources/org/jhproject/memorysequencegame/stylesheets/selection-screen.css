@@ -1,0 +1,33 @@
+#rootVbox {
+    -fx-background-color: #FFFCF0;
+}
+
+#buttonVbox {
+    -fx-background-color:  #FFF66F;
+}
+
+#easyButton {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+#easyButton:hover {
+    -fx-background-color: #319148;
+}
+
+#mediumButton {
+    -fx-background-color: #FBC02D;
+    -fx-text-fill: #1A0900;
+}
+
+#mediumButton:hover {
+    -fx-background-color: #FC9F26;
+}
+
+#hardButton {
+    -fx-background-color: #D32F2F;
+    -fx-text-fill: white;
+}
+#hardButton:hover {
+    -fx-background-color: #B90016;
+}
