@@ -2,6 +2,14 @@
     -fx-background-color: #FFFCF0;
 }
 
+#headerHbox {
+    -fx-background-color: #FFF66F;
+}
+
+#headerLabel {
+    -fx-text-fill: #1c0901;
+}
+
 #buttonVbox {
     -fx-background-color:  #FFF66F;
 }
@@ -28,6 +36,17 @@
     -fx-background-color: #D32F2F;
     -fx-text-fill: white;
 }
+
 #hardButton:hover {
     -fx-background-color: #B90016;
+}
+
+#settingsButton {
+    -fx-background-color: #434958;
+    -fx-text-fill: white;
+}
+
+#settingsButton:hover {
+    -fx-background-color: #586674;
+    -fx-text-fill: white;
 }

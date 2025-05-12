@@ -5,6 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -28,20 +29,31 @@ public class SelectionController {
     @FXML
     private Button hardButton;
     @FXML
+    private HBox headerHbox;
+    @FXML
     private VBox buttonVbox;
+    @FXML
+    private Button settingsButton;
 
     private final URL HEADER_FONT = getClass().getResource("fonts/Poppins-Bold.ttf");
     private final URL BUTTON_FONT = getClass().getResource("fonts/NunitoSans_7pt-SemiBold.ttf");
     private final URL STYLE_SHEET = getClass().getResource("stylesheets/selection-screen.css");
 
-    /**
-     * Responds to the changes in the width and height of buttonVbox.
-     * It calls a method that calculates the appropriate font size of the buttons and changes the buttons' font size to fit in the buttons' new size.
-     */
     private final ChangeListener<Number> buttonSizeListener = (_, _, _) -> {
-        easyButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
-        mediumButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
-        hardButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
+        if (BUTTON_FONT != null) {
+            easyButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
+            mediumButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
+            hardButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
+        }
+    };
+
+    private final ChangeListener<Number> headerHboxSizeListener = (_, _, newValue) -> {
+        if (newValue.doubleValue() <= 480.0 && HEADER_FONT != null) {
+            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), adjustHeaderFontSize()));
+        }
+        else if (newValue.doubleValue() > 480.0 && HEADER_FONT != null) {
+            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
+        }
     };
 
     /**
@@ -54,25 +66,38 @@ public class SelectionController {
             rootVbox.getStylesheets().add(STYLE_SHEET.toString());
         }
         if (HEADER_FONT != null) {
-            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 40));
+            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
         }
         Platform.runLater(() -> {
             if (BUTTON_FONT != null) {
                 easyButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
                 mediumButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
                 hardButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
+                settingsButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 16));
             }
             buttonVbox.heightProperty().addListener(buttonSizeListener);
             buttonVbox.widthProperty().addListener(buttonSizeListener);
+            headerHbox.widthProperty().addListener(headerHboxSizeListener);
         });
     }
 
     /**
      * Calculates the new font size for the buttons based on the width and height of the buttonVbox.
+     *
+     * @return The new font size for the text in the difficulty buttons.
      */
     private double adjustButtonFontSize() {
         double newFontSizeHeight = buttonVbox.getHeight() / 12.5;
         double newFontSizeWidth = buttonVbox.getWidth() / 9.5;
         return Math.min(newFontSizeHeight, newFontSizeWidth);
+    }
+
+    /**
+     * Calculates the new font size for the header label.
+     *
+     * @return The new font size of the header label
+     */
+    private double adjustHeaderFontSize() {
+        return headerHbox.getWidth() / 9.7;
     }
 }
