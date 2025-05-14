@@ -3,7 +3,6 @@ package org.jhproject.memorysequencegame;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,6 +31,27 @@ public class TitleController {
 
     private final URL IMAGE_FILE = getClass().getResource("images/RTT_Logo.png");
     private boolean boundToWidth = true;
+
+    /**
+     * Responds to changes in the width of imageVbox.
+     * Binds logoImageView fit height to imageVbox width when width is greater than or equal to 512
+     * to make game logo grow and shrink to fit the available space in imageVbox.
+     */
+    private final ChangeListener<Number> imgVboxWidth = (_, _, newValue) -> {
+        if (newValue.doubleValue() < 512 && boundToWidth) {
+            logoImageView.fitWidthProperty().unbind();
+            logoImageView.fitHeightProperty().unbind();
+            logoImageView.setFitWidth(320.0);
+            logoImageView.setFitHeight(384.62);
+            boundToWidth = false;
+        } else if (newValue.doubleValue() >= 512 && !boundToWidth) {
+            //Dividing the current width by 1.6 ensures image fits in the scene, the smaller the number, the bigger the image relative to width.
+            logoImageView.fitWidthProperty().bind(imageVbox.widthProperty().divide(1.6));
+            //Dividing the current height by 1.3 ensures image fits in the scene, the smaller the number, the bigger the image relative to width.
+            logoImageView.fitHeightProperty().bind(imageVbox.heightProperty().divide(1.3));
+            boundToWidth = true;
+        }
+    };
 
     /**
      * Adds game logo to title screen and starts a timeline that switches title screen to difficulty selection screen
@@ -87,28 +107,4 @@ public class TitleController {
 
         return initializeProcess;
     }
-
-    /**
-     * Responds to changes in the width of imageVbox.
-     * Binds logoImageView fit height to imageVbox width when width is greater than or equal to 512
-     * to make game logo grow and shrink to fit the available space in imageVbox.
-     */
-    ChangeListener<Number> imgVboxWidth = new ChangeListener<>() {
-        @Override
-        public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-            if (newValue.doubleValue() < 512 && boundToWidth) {
-                logoImageView.fitWidthProperty().unbind();
-                logoImageView.fitHeightProperty().unbind();
-                logoImageView.setFitWidth(320.0);
-                logoImageView.setFitHeight(384.62);
-                boundToWidth = false;
-            } else if (newValue.doubleValue() >= 512 && !boundToWidth) {
-                //Dividing the current width by 1.6 ensures image fits in the scene, the smaller the number, the bigger the image relative to width.
-                logoImageView.fitWidthProperty().bind(imageVbox.widthProperty().divide(1.6));
-                //Dividing the current height by 1.3 ensures image fits in the scene, the smaller the number, the bigger the image relative to width.
-                logoImageView.fitHeightProperty().bind(imageVbox.heightProperty().divide(1.3));
-                boundToWidth = true;
-            }
-        }
-    };
 }
