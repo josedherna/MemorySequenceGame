@@ -73,7 +73,7 @@ public class SelectionController {
                 easyButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
                 mediumButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
                 hardButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
-                settingsButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 16));
+                settingsButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 16.5));
             }
             buttonVbox.heightProperty().addListener(buttonSizeListener);
             buttonVbox.widthProperty().addListener(buttonSizeListener);

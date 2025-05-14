@@ -41,17 +41,15 @@
                 <Button fx:id="hardButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Hard" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             </GridPane>
         </VBox>
-        <VBox alignment="CENTER" maxHeight="40.0" maxWidth="500.0" minHeight="30.0" prefHeight="40.0" prefWidth="500.0">
-            <GridPane maxHeight="320.0" maxWidth="100.0" vgap="8.0" VBox.vgrow="ALWAYS">
+        <VBox alignment="CENTER" maxHeight="80.0" maxWidth="500.0" minHeight="30.0" prefHeight="40.0" prefWidth="500.0" VBox.vgrow="SOMETIMES">
+            <GridPane maxHeight="320.0" maxWidth="120.0" prefHeight="30.0" prefWidth="100.0" vgap="8.0" VBox.vgrow="ALWAYS">
                 <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 </rowConstraints>
-                <Button fx:id="settingsButton" maxHeight="300.0" maxWidth="1.7976931348623157E308"
-                        mnemonicParsing="false" prefHeight="40.0" prefWidth="400.0" text="Settings"
-                        GridPane.halignment="CENTER"/>
+                <Button fx:id="settingsButton" maxHeight="300.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" prefWidth="400.0" text="Settings" GridPane.halignment="CENTER" />
             </GridPane>
         </VBox>
     </VBox>
