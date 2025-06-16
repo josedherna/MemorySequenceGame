@@ -3,12 +3,16 @@ package org.jhproject.memorysequencegame;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -37,7 +41,7 @@ public class SelectionController {
 
     private final URL HEADER_FONT = getClass().getResource("fonts/Poppins-Bold.ttf");
     private final URL BUTTON_FONT = getClass().getResource("fonts/NunitoSans_7pt-SemiBold.ttf");
-    private final URL STYLE_SHEET = getClass().getResource("stylesheets/selection-screen.css");
+    private final URL EASY_STYLE_SHEET = getClass().getResource("stylesheets/easy-info.css");
 
     private final ChangeListener<Number> buttonSizeListener = (_, _, _) -> {
         if (BUTTON_FONT != null) {
@@ -62,9 +66,6 @@ public class SelectionController {
      */
     @FXML
     private void initialize() {
-        if (STYLE_SHEET != null) {
-            rootVbox.getStylesheets().add(STYLE_SHEET.toString());
-        }
         if (HEADER_FONT != null) {
             headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
         }
@@ -79,6 +80,32 @@ public class SelectionController {
             buttonVbox.widthProperty().addListener(buttonSizeListener);
             headerHbox.widthProperty().addListener(headerHboxSizeListener);
         });
+    }
+
+    /**
+     * Switches scene to display information about the easy difficulty of the game
+     */
+    @FXML
+    public void displayEasyGame() {
+        FXMLLoader easyInfoPage = new FXMLLoader(getClass().getResource("infoscreen-view.fxml"));
+        Parent easyInfoParent = null;
+        InfoController easyInfoController = null;
+
+        try {
+            easyInfoParent = easyInfoPage.load();
+            easyInfoController = easyInfoPage.getController();
+            Scene currentScene = rootVbox.getScene();
+            if (EASY_STYLE_SHEET != null) {
+                easyInfoParent.getStylesheets().add(EASY_STYLE_SHEET.toString());
+                easyInfoController.initializeEasyInfo();
+                currentScene.setRoot(easyInfoParent);
+                buttonVbox.heightProperty().removeListener(buttonSizeListener);
+                buttonVbox.widthProperty().removeListener(buttonSizeListener);
+                headerHbox.widthProperty().removeListener(headerHboxSizeListener);
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading Easy Info page");;
+        }
     }
 
     /**

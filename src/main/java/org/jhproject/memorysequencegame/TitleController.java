@@ -30,6 +30,7 @@ public class TitleController {
     private VBox imageVbox;
 
     private final URL IMAGE_FILE = getClass().getResource("images/RTT_Logo.png");
+    private final URL DIFFICULTY_STYLE_SHEET = getClass().getResource("stylesheets/selection-screen.css");
     private boolean boundToWidth = true;
 
     /**
@@ -95,14 +96,16 @@ public class TitleController {
 
             try {
                 difficultyParent = difficultyPage.load();
+                //Changes scene to difficulty selection screen.
+                Scene currentScene = titleParentVbox.getScene();
+                if (DIFFICULTY_STYLE_SHEET != null) {
+                    currentScene.getStylesheets().add(DIFFICULTY_STYLE_SHEET.toString());
+                    currentScene.setRoot(difficultyParent);
+                    imageVbox.widthProperty().removeListener(imgVboxWidth);
+                }
             } catch (IOException e) {
                 System.out.println("Error loading Difficulty Page");
             }
-
-            //Changes scene to difficulty selection screen.
-            Scene currentScene = titleParentVbox.getScene();
-            currentScene.setRoot(difficultyParent);
-            imageVbox.widthProperty().removeListener(imgVboxWidth);
         }));
 
         return initializeProcess;
