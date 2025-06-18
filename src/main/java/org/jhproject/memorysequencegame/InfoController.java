@@ -1,6 +1,9 @@
 package org.jhproject.memorysequencegame;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -8,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextFlow;
 
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -44,6 +48,7 @@ public class InfoController {
     private final URL HEADER_FONT = getClass().getResource("fonts/Poppins-Bold.ttf");
     private final URL INFO_LABEL_FONT = getClass().getResource("fonts/Poppins-SemiBold.ttf");
     private final URL BUTTON_FONT = getClass().getResource("fonts/NunitoSans_7pt-SemiBold.ttf");
+    private final URL DIFFICULTY_STYLE_SHEET = getClass().getResource("stylesheets/selection-screen.css");
 
     @FXML
     private void initialize() {
@@ -61,6 +66,31 @@ public class InfoController {
         }
     }
 
+    /**
+     * Returns the player back to the difficulty selection screen.
+     */
+    @FXML
+    private void returnToSelection() {
+        FXMLLoader difficultyPage = new FXMLLoader(getClass().getResource("selection-view.fxml"));
+
+        try {
+            Parent difficultyParent = difficultyPage.load();
+            SelectionController difficultyController = difficultyPage.getController();
+            //Changes scene to difficulty selection screen.
+            Scene currentScene = rootVbox.getScene();
+            if (DIFFICULTY_STYLE_SHEET != null) {
+                currentScene.getStylesheets().add(DIFFICULTY_STYLE_SHEET.toString());
+                difficultyController.adjustHeaderFontSize(rootVbox.getWidth());
+                currentScene.setRoot(difficultyParent);
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading Difficulty Page");
+        }
+    }
+
+    /**
+     * Changes the difficulty information screen to the easy difficulty version.
+     */
     protected void initializeEasyInfo() {
         difficultyLabel.setText("Easy");
     }

@@ -53,7 +53,7 @@ public class SelectionController {
 
     private final ChangeListener<Number> headerHboxSizeListener = (_, _, newValue) -> {
         if (newValue.doubleValue() <= 480.0 && HEADER_FONT != null) {
-            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), adjustHeaderFontSize()));
+            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), headerHbox.getWidth() / 9.7));
         }
         else if (newValue.doubleValue() > 480.0 && HEADER_FONT != null) {
             headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
@@ -83,17 +83,15 @@ public class SelectionController {
     }
 
     /**
-     * Switches scene to display information about the easy difficulty of the game
+     * Switches scene to display information about the easy difficulty of the game.
      */
     @FXML
     public void displayEasyGame() {
         FXMLLoader easyInfoPage = new FXMLLoader(getClass().getResource("infoscreen-view.fxml"));
-        Parent easyInfoParent = null;
-        InfoController easyInfoController = null;
 
         try {
-            easyInfoParent = easyInfoPage.load();
-            easyInfoController = easyInfoPage.getController();
+            Parent easyInfoParent = easyInfoPage.load();
+            InfoController easyInfoController = easyInfoPage.getController();
             Scene currentScene = rootVbox.getScene();
             if (EASY_STYLE_SHEET != null) {
                 easyInfoParent.getStylesheets().add(EASY_STYLE_SHEET.toString());
@@ -104,7 +102,7 @@ public class SelectionController {
                 headerHbox.widthProperty().removeListener(headerHboxSizeListener);
             }
         } catch (IOException e) {
-            System.out.println("Error loading Easy Info page");;
+            System.out.println("Error loading Easy Info page");
         }
     }
 
@@ -120,11 +118,14 @@ public class SelectionController {
     }
 
     /**
-     * Calculates the new font size for the header label.
-     *
-     * @return The new font size of the header label
+     * Calculates the new font size for the header label when it first loads.
      */
-    private double adjustHeaderFontSize() {
-        return headerHbox.getWidth() / 9.7;
+    protected void adjustHeaderFontSize(double width) {
+        if (width <= 480.0 && HEADER_FONT != null) {
+            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), width / 9.7));
+        }
+        else if (width > 480.0 && HEADER_FONT != null) {
+            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
+        }
     }
 }
