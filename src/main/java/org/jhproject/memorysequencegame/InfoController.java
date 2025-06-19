@@ -1,5 +1,7 @@
 package org.jhproject.memorysequencegame;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -50,6 +52,19 @@ public class InfoController {
     private final URL BUTTON_FONT = getClass().getResource("fonts/NunitoSans_7pt-SemiBold.ttf");
     private final URL DIFFICULTY_STYLE_SHEET = getClass().getResource("stylesheets/selection-screen.css");
 
+    private final ChangeListener<Number> headerHboxSizeListener = (_, _, newValue) -> {
+        if (newValue.doubleValue() <= 480.0 && HEADER_FONT != null) {
+            difficultyLabel.setFont(Font.loadFont(HEADER_FONT.toString(), headerHbox.getWidth() / 9.7));
+        }
+        else if (newValue.doubleValue() > 480.0 && HEADER_FONT != null) {
+            difficultyLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
+        }
+    };
+
+    /**
+     * Applies font to labels and buttons, as well as changing the font size to fit the available space
+     * without overflowing.
+     */
     @FXML
     private void initialize() {
         if (HEADER_FONT != null) {
@@ -64,6 +79,10 @@ public class InfoController {
             backButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 18));
             skipButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 18));
         }
+
+        Platform.runLater(() -> {
+           headerHbox.widthProperty().addListener(headerHboxSizeListener);
+        });
     }
 
     /**
@@ -85,6 +104,18 @@ public class InfoController {
             }
         } catch (IOException e) {
             System.out.println("Error loading Difficulty Page");
+        }
+    }
+
+    /**
+     * Calculates the new font size for the header label when it first loads.
+     */
+    protected void adjustHeaderFontSize(double width) {
+        if (width <= 480.0 && HEADER_FONT != null) {
+            difficultyLabel.setFont(Font.loadFont(HEADER_FONT.toString(), width / 9.7));
+        }
+        else if (width > 480.0 && HEADER_FONT != null) {
+            difficultyLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
         }
     }
 

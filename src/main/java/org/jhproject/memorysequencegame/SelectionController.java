@@ -98,6 +98,7 @@ public class SelectionController {
             if (EASY_STYLE_SHEET != null) {
                 easyInfoParent.getStylesheets().add(EASY_STYLE_SHEET.toString());
                 easyInfoController.initializeEasyInfo();
+                easyInfoController.adjustHeaderFontSize(rootVbox.getWidth());
                 currentScene.setRoot(easyInfoParent);
                 buttonVbox.heightProperty().removeListener(buttonSizeListener);
                 buttonVbox.widthProperty().removeListener(buttonSizeListener);
@@ -122,6 +123,7 @@ public class SelectionController {
             if (MEDIUM_STYLE_SHEET != null) {
                 mediumInfoParent.getStylesheets().add(MEDIUM_STYLE_SHEET.toString());
                 mediumInfoController.initializeMediumInfo();
+                mediumInfoController.adjustHeaderFontSize(rootVbox.getWidth());
                 currentScene.setRoot(mediumInfoParent);
                 buttonVbox.heightProperty().removeListener(buttonSizeListener);
                 buttonVbox.widthProperty().removeListener(buttonSizeListener);
@@ -132,17 +134,21 @@ public class SelectionController {
         }
     }
 
+    /**
+     * Switches scene to display information about the hard difficulty of the game.
+     */
     @FXML
     private void displayHardGame() {
         FXMLLoader hardInfoPage = new FXMLLoader(getClass().getResource("infoscreen-view.fxml"));
 
         try {
             Parent hardInfoParent = hardInfoPage.load();
-            InfoController HardInfoController = hardInfoPage.getController();
+            InfoController hardInfoController = hardInfoPage.getController();
             Scene currentScene = rootVbox.getScene();
             if (HARD_STYLE_SHEET != null) {
                 hardInfoParent.getStylesheets().add(HARD_STYLE_SHEET.toString());
-                HardInfoController.initializeHardInfo();
+                hardInfoController.initializeHardInfo();
+                hardInfoController.adjustHeaderFontSize(rootVbox.getWidth());
                 currentScene.setRoot(hardInfoParent);
                 buttonVbox.heightProperty().removeListener(buttonSizeListener);
                 buttonVbox.widthProperty().removeListener(buttonSizeListener);
