@@ -1,0 +1,60 @@
+#rootVbox {
+    -fx-background-color: #fff9db;
+}
+
+#headerHbox {
+    -fx-background-color: #FBD82D;
+}
+
+#difficultyLabel {
+    -fx-text-fill: #242323;
+}
+
+#infoHbox {
+    -fx-background-color: #FBD82D;
+}
+
+#infoLabel {
+    -fx-text-fill: #242323;
+}
+
+#middleInfoVbox {
+    -fx-background-color: #FBD82D;
+}
+
+#textVbox {
+    -fx-background-color: #ffefcb;
+}
+
+#buttonHbox {
+    -fx-background-color: #FBD82D;
+}
+
+#backButton {
+    -fx-background-color: #fffeeb;
+    -fx-border-color: #242323;
+    -fx-text-fill: #242323;
+    -fx-background-insets: 0px;
+    -fx-border-insets: -1px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3px;
+}
+#backButton:hover {
+    -fx-background-color: #FEFFFD;
+    -fx-border-color: #343332;
+}
+
+#skipButton {
+    -fx-background-color: #242323;
+    -fx-border-color: #242323;
+    -fx-text-fill: #FEFFFD;
+    -fx-background-insets: 0px;
+    -fx-border-insets: -1px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3px;
+}
+
+#skipButton:hover {
+    -fx-background-color: #1A1919;
+    -fx-border-color: #1A1919;
+}

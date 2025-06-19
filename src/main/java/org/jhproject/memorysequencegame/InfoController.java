@@ -94,4 +94,11 @@ public class InfoController {
     protected void initializeEasyInfo() {
         difficultyLabel.setText("Easy");
     }
+
+    /**
+     * Changes the difficulty information screen to the medium difficulty version.
+     */
+    protected void initializeMediumInfo() {
+        difficultyLabel.setText("Medium");
+    }
 }

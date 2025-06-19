@@ -37,7 +37,7 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 </rowConstraints>
                 <Button fx:id="easyButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#displayEasyGame" text="Easy" GridPane.halignment="CENTER" />
-                <Button fx:id="mediumButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Medium" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Button fx:id="mediumButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#displayMediumGame" text="Medium" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                 <Button fx:id="hardButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Hard" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
             </GridPane>
         </VBox>
