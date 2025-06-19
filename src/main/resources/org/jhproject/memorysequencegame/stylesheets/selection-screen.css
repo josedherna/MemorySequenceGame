@@ -1,5 +1,5 @@
 #rootVbox {
-    -fx-background-color: #fffae4;
+    -fx-background-color: #FFFBDB;
 }
 
 #headerHbox {
@@ -7,46 +7,46 @@
 }
 
 #headerLabel {
-    -fx-text-fill: #1c0901;
+    -fx-text-fill: #242323;
 }
 
 #buttonVbox {
-    -fx-background-color:  #FFF66F;
+    -fx-background-color: #D9D5BC;
 }
 
 #easyButton {
-    -fx-background-color: #4CAF50;
-    -fx-text-fill: white;
+    -fx-background-color: #363636;
+    -fx-text-fill: #59CC5D;
 }
 
 #easyButton:hover {
-    -fx-background-color: #319148;
+    -fx-background-color: #242323;
 }
 
 #mediumButton {
-    -fx-background-color: #FBC02D;
-    -fx-text-fill: #1A0900;
+    -fx-background-color: #363636;
+    -fx-text-fill: #FBD82D;
 }
 
 #mediumButton:hover {
-    -fx-background-color: #FC9F26;
+    -fx-background-color: #242323;
 }
 
 #hardButton {
-    -fx-background-color: #D32F2F;
-    -fx-text-fill: white;
+    -fx-background-color: #363636;
+    -fx-text-fill: #FF4747;
 }
 
 #hardButton:hover {
-    -fx-background-color: #B90016;
+    -fx-background-color: #242323;
 }
 
 #settingsButton {
-    -fx-background-color: #3E4557;
-    -fx-text-fill: white;
+    -fx-background-color: #363636;
+    -fx-text-fill: #F6F5F2;
 }
 
 #settingsButton:hover {
-    -fx-background-color: #586674;
-    -fx-text-fill: white;
+    -fx-background-color: #242323;
+    -fx-text-fill: #F6F5F2;
 }

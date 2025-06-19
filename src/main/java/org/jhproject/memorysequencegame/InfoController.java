@@ -61,8 +61,8 @@ public class InfoController {
         }
 
         if (BUTTON_FONT != null) {
-            backButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 16));
-            skipButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 16));
+            backButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 18));
+            skipButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 18));
         }
     }
 

@@ -24,29 +24,29 @@
 
 #backButton {
     -fx-background-color: #F5FFEB;
-    -fx-border-color: #263f4f;
+    -fx-border-color: #242416;
     -fx-text-fill: #4CAF50;
     -fx-background-insets: 0px;
     -fx-border-insets: -1px;
-    -fx-border-width: 3px;
+    -fx-border-width: 2px;
     -fx-border-radius: 3px;
 }
 #backButton:hover {
     -fx-background-color: white;
-    -fx-border-color: #374955;
+    -fx-border-color: #30321F;
 }
 
 #skipButton {
-    -fx-background-color: #263f4f;
-    -fx-border-color: #263f4f;
-    -fx-text-fill: white;
+    -fx-background-color: #242416;
+    -fx-border-color: #242416;
+    -fx-text-fill: #FEFFFD;
     -fx-background-insets: 0px;
     -fx-border-insets: -1px;
-    -fx-border-width: 3px;
+    -fx-border-width: 2px;
     -fx-border-radius: 3px;
 }
 
 #skipButton:hover {
-    -fx-background-color: #374955;
-    -fx-border-color: #374955;
+    -fx-background-color: #1A1D11;
+    -fx-border-color: #1A1D11;
 }
