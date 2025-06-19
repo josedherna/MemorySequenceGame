@@ -1,5 +1,5 @@
 #rootVbox {
-    -fx-background-color: #fff9db;
+    -fx-background-color: #FDFFDB;
 }
 
 #headerHbox {
@@ -23,7 +23,7 @@
 }
 
 #textVbox {
-    -fx-background-color: #ffefcb;
+    -fx-background-color: #FFF4CB;
 }
 
 #buttonHbox {
@@ -31,7 +31,7 @@
 }
 
 #backButton {
-    -fx-background-color: #fffeeb;
+    -fx-background-color: #FFFEEB;
     -fx-border-color: #242323;
     -fx-text-fill: #242323;
     -fx-background-insets: 0px;

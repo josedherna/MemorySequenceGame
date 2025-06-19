@@ -43,6 +43,7 @@ public class SelectionController {
     private final URL BUTTON_FONT = getClass().getResource("fonts/NunitoSans_7pt-SemiBold.ttf");
     private final URL EASY_STYLE_SHEET = getClass().getResource("stylesheets/easy-info.css");
     private final URL MEDIUM_STYLE_SHEET = getClass().getResource("stylesheets/medium-info.css");
+    private final URL HARD_STYLE_SHEET = getClass().getResource("stylesheets/hard-info.css");
 
     private final ChangeListener<Number> buttonSizeListener = (_, _, _) -> {
         if (BUTTON_FONT != null) {
@@ -87,7 +88,7 @@ public class SelectionController {
      * Switches scene to display information about the easy difficulty of the game.
      */
     @FXML
-    public void displayEasyGame() {
+    private void displayEasyGame() {
         FXMLLoader easyInfoPage = new FXMLLoader(getClass().getResource("infoscreen-view.fxml"));
 
         try {
@@ -111,7 +112,7 @@ public class SelectionController {
      * Switches scene to display information about the medium difficulty of the game.
      */
     @FXML
-    protected void displayMediumGame() {
+    private void displayMediumGame() {
         FXMLLoader mediumInfoPage = new FXMLLoader(getClass().getResource("infoscreen-view.fxml"));
 
         try {
@@ -122,6 +123,27 @@ public class SelectionController {
                 mediumInfoParent.getStylesheets().add(MEDIUM_STYLE_SHEET.toString());
                 mediumInfoController.initializeMediumInfo();
                 currentScene.setRoot(mediumInfoParent);
+                buttonVbox.heightProperty().removeListener(buttonSizeListener);
+                buttonVbox.widthProperty().removeListener(buttonSizeListener);
+                headerHbox.widthProperty().removeListener(headerHboxSizeListener);
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading Easy Info page");
+        }
+    }
+
+    @FXML
+    private void displayHardGame() {
+        FXMLLoader hardInfoPage = new FXMLLoader(getClass().getResource("infoscreen-view.fxml"));
+
+        try {
+            Parent hardInfoParent = hardInfoPage.load();
+            InfoController HardInfoController = hardInfoPage.getController();
+            Scene currentScene = rootVbox.getScene();
+            if (HARD_STYLE_SHEET != null) {
+                hardInfoParent.getStylesheets().add(HARD_STYLE_SHEET.toString());
+                HardInfoController.initializeHardInfo();
+                currentScene.setRoot(hardInfoParent);
                 buttonVbox.heightProperty().removeListener(buttonSizeListener);
                 buttonVbox.widthProperty().removeListener(buttonSizeListener);
                 headerHbox.widthProperty().removeListener(headerHboxSizeListener);
