@@ -3,7 +3,7 @@
 }
 
 #headerHbox {
-    -fx-background-color: #FF4747;
+    -fx-background-color: #CD3535;
 }
 
 #difficultyLabel {
@@ -11,7 +11,7 @@
 }
 
 #infoHbox {
-    -fx-background-color: #FF4747;
+    -fx-background-color: #CD3535;
 }
 
 #infoLabel {
@@ -19,7 +19,7 @@
 }
 
 #middleInfoVbox {
-    -fx-background-color: #FF4747;
+    -fx-background-color: #CD3535;
 }
 
 #textVbox {
@@ -27,7 +27,7 @@
 }
 
 #buttonHbox {
-    -fx-background-color: #FF4747;
+    -fx-background-color: #CD3535;
 }
 
 #backButton {
@@ -44,7 +44,7 @@
     -fx-border-color: #253642;
 }
 
-#skipButton {
+#startButton {
     -fx-background-color: #1B2631;
     -fx-border-color: #1B2631;
     -fx-text-fill: #FEFFFD;
@@ -54,7 +54,7 @@
     -fx-border-radius: 3px;
 }
 
-#skipButton:hover {
+#startButton:hover {
     -fx-background-color: #141b24;
     -fx-border-color: #141b24;
 }

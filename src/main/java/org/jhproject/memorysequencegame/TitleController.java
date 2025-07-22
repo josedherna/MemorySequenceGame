@@ -30,7 +30,6 @@ public class TitleController {
     private VBox imageVbox;
 
     private final URL IMAGE_FILE = getClass().getResource("images/RTT_Logo.png");
-    private final URL DIFFICULTY_STYLE_SHEET = getClass().getResource("stylesheets/selection-screen.css");
     private boolean boundToWidth = true;
 
     /**
@@ -96,11 +95,12 @@ public class TitleController {
             try {
                 Parent difficultyParent = difficultyPage.load();
                 SelectionController difficultyController = difficultyPage.getController();
+                URL difficultyStyleSheet = difficultyController.getSelectionStylesheet();
+
                 //Changes scene to difficulty selection screen.
                 Scene currentScene = rootVbox.getScene();
-                if (DIFFICULTY_STYLE_SHEET != null) {
-                    currentScene.getStylesheets().add(DIFFICULTY_STYLE_SHEET.toString());
-                    difficultyController.adjustHeaderFontSize(rootVbox.getWidth());
+                if (difficultyStyleSheet != null) {
+                    currentScene.getStylesheets().add(difficultyStyleSheet.toString());
                     currentScene.setRoot(difficultyParent);
                     imageVbox.widthProperty().removeListener(imgVboxWidth);
                 }

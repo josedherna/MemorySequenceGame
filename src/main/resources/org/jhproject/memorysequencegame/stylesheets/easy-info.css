@@ -44,7 +44,7 @@
     -fx-border-color: #30321F;
 }
 
-#skipButton {
+#startButton {
     -fx-background-color: #242416;
     -fx-border-color: #242416;
     -fx-text-fill: #FEFFFD;
@@ -54,7 +54,7 @@
     -fx-border-radius: 3px;
 }
 
-#skipButton:hover {
+#startButton:hover {
     -fx-background-color: #1A1D11;
     -fx-border-color: #1A1D11;
 }
