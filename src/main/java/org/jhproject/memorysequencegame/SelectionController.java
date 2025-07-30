@@ -1,14 +1,17 @@
 package org.jhproject.memorysequencegame;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -34,22 +37,25 @@ public class SelectionController {
     private VBox buttonVbox;
     @FXML
     private Button settingsButton;
+    @FXML
+    private HBox settingsHbox;
 
     private final URL HEADER_FONT = getClass().getResource("fonts/Poppins-Bold.ttf");
     private final URL BUTTON_FONT = getClass().getResource("fonts/NunitoSans_7pt-SemiBold.ttf");
-    private final URL STYLE_SHEET = getClass().getResource("stylesheets/selection-screen.css");
+    private final URL DIFFICULTY_STYLE_SHEET = getClass().getResource("stylesheets/selection-screen.css");
 
     private final ChangeListener<Number> buttonSizeListener = (_, _, _) -> {
         if (BUTTON_FONT != null) {
-            easyButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
-            mediumButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
-            hardButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
+            easyButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustDifficultyButtonFontSize()));
+            mediumButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustDifficultyButtonFontSize()));
+            hardButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustDifficultyButtonFontSize()));
+            settingsButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustSettingsButtonFontSize()));
         }
     };
 
     private final ChangeListener<Number> headerHboxSizeListener = (_, _, newValue) -> {
         if (newValue.doubleValue() <= 480.0 && HEADER_FONT != null) {
-            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), adjustHeaderFontSize()));
+            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), headerHbox.getWidth() / 9.7));
         }
         else if (newValue.doubleValue() > 480.0 && HEADER_FONT != null) {
             headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
@@ -62,23 +68,95 @@ public class SelectionController {
      */
     @FXML
     private void initialize() {
-        if (STYLE_SHEET != null) {
-            rootVbox.getStylesheets().add(STYLE_SHEET.toString());
-        }
-        if (HEADER_FONT != null) {
-            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
-        }
-        Platform.runLater(() -> {
-            if (BUTTON_FONT != null) {
-                easyButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
-                mediumButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
-                hardButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
-                settingsButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 16.5));
+        buttonVbox.heightProperty().addListener(buttonSizeListener);
+        buttonVbox.widthProperty().addListener(buttonSizeListener);
+        settingsHbox.widthProperty().addListener(buttonSizeListener);
+        settingsHbox.heightProperty().addListener(buttonSizeListener);
+        headerHbox.widthProperty().addListener(headerHboxSizeListener);
+    }
+
+    /**
+     * Switches scene to display information about the easy difficulty of the game.
+     */
+    @FXML
+    private void displayEasyGame() {
+        FXMLLoader easyInfoPage = new FXMLLoader(getClass().getResource("infoscreen-view.fxml"));
+
+        try {
+            Parent easyInfoParent = easyInfoPage.load();
+            InfoController easyInfoController = easyInfoPage.getController();
+            URL easyStyleSheet = easyInfoController.getEasyStyleSheet();
+
+            Scene currentScene = rootVbox.getScene();
+            if (easyStyleSheet != null) {
+                easyInfoParent.getStylesheets().add(easyStyleSheet.toString());
+                easyInfoController.initializeEasyInfo("en");
+                currentScene.setRoot(easyInfoParent);
+                buttonVbox.heightProperty().removeListener(buttonSizeListener);
+                buttonVbox.widthProperty().removeListener(buttonSizeListener);
+                settingsHbox.heightProperty().removeListener(buttonSizeListener);
+                settingsHbox.widthProperty().removeListener(buttonSizeListener);
+                headerHbox.widthProperty().removeListener(headerHboxSizeListener);
             }
-            buttonVbox.heightProperty().addListener(buttonSizeListener);
-            buttonVbox.widthProperty().addListener(buttonSizeListener);
-            headerHbox.widthProperty().addListener(headerHboxSizeListener);
-        });
+        } catch (IOException e) {
+            System.out.println("Error loading Easy Info page");
+        }
+    }
+
+    /**
+     * Switches scene to display information about the medium difficulty of the game.
+     */
+    @FXML
+    private void displayMediumGame() {
+        FXMLLoader mediumInfoPage = new FXMLLoader(getClass().getResource("infoscreen-view.fxml"));
+
+        try {
+            Parent mediumInfoParent = mediumInfoPage.load();
+            InfoController mediumInfoController = mediumInfoPage.getController();
+            URL mediumStyleSheet = mediumInfoController.getMediumStyleSheet();
+
+            Scene currentScene = rootVbox.getScene();
+            if (mediumStyleSheet != null) {
+                mediumInfoParent.getStylesheets().add(mediumStyleSheet.toString());
+                mediumInfoController.initializeMediumInfo("en");
+                currentScene.setRoot(mediumInfoParent);
+                buttonVbox.heightProperty().removeListener(buttonSizeListener);
+                buttonVbox.widthProperty().removeListener(buttonSizeListener);
+                settingsHbox.heightProperty().removeListener(buttonSizeListener);
+                settingsHbox.widthProperty().removeListener(buttonSizeListener);
+                headerHbox.widthProperty().removeListener(headerHboxSizeListener);
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading Easy Info page");
+        }
+    }
+
+    /**
+     * Switches scene to display information about the hard difficulty of the game.
+     */
+    @FXML
+    private void displayHardGame() {
+        FXMLLoader hardInfoPage = new FXMLLoader(getClass().getResource("infoscreen-view.fxml"));
+
+        try {
+            Parent hardInfoParent = hardInfoPage.load();
+            InfoController hardInfoController = hardInfoPage.getController();
+            URL hardStyleSheet = hardInfoController.getHardStyleSheet();
+
+            Scene currentScene = rootVbox.getScene();
+            if (hardStyleSheet != null) {
+                hardInfoParent.getStylesheets().add(hardStyleSheet.toString());
+                hardInfoController.initializeHardInfo("en");
+                currentScene.setRoot(hardInfoParent);
+                buttonVbox.heightProperty().removeListener(buttonSizeListener);
+                buttonVbox.widthProperty().removeListener(buttonSizeListener);
+                settingsHbox.heightProperty().removeListener(buttonSizeListener);
+                settingsHbox.widthProperty().removeListener(buttonSizeListener);
+                headerHbox.widthProperty().removeListener(headerHboxSizeListener);
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading Easy Info page");
+        }
     }
 
     /**
@@ -86,18 +164,29 @@ public class SelectionController {
      *
      * @return The new font size for the text in the difficulty buttons.
      */
-    private double adjustButtonFontSize() {
+    private double adjustDifficultyButtonFontSize() {
         double newFontSizeHeight = buttonVbox.getHeight() / 12.5;
         double newFontSizeWidth = buttonVbox.getWidth() / 9.5;
         return Math.min(newFontSizeHeight, newFontSizeWidth);
     }
 
     /**
-     * Calculates the new font size for the header label.
+     * Calculates the new font size for the buttons based on the width and height of the settingsHbox.
      *
-     * @return The new font size of the header label
+     * @return The new font size for the text in the settings button.
      */
-    private double adjustHeaderFontSize() {
-        return headerHbox.getWidth() / 9.7;
+    private double adjustSettingsButtonFontSize() {
+        double newFontSizeHeight = settingsHbox.getHeight() / 3.5;
+        double newFontSizeWidth = settingsHbox.getWidth() / 12.5;
+        return Math.min(newFontSizeHeight, newFontSizeWidth);
+    }
+
+    /**
+     * Gets the URL of the CSS stylesheet for the difficulty selection screen.
+     *
+     * @return The URL of the CSS stylesheet for the difficulty selection screen.
+     */
+    protected URL getSelectionStylesheet() {
+        return DIFFICULTY_STYLE_SHEET;
     }
 }

@@ -23,9 +23,9 @@ import java.net.URL;
  */
 public class TitleController {
     @FXML
-    private ImageView logoImageView;
+    private VBox rootVbox;
     @FXML
-    private VBox titleParentVbox;
+    private ImageView logoImageView;
     @FXML
     private VBox imageVbox;
 
@@ -91,18 +91,22 @@ public class TitleController {
         }));
         initializeProcess.getKeyFrames().add(new KeyFrame(Duration.seconds(1.2), _ -> {
             FXMLLoader difficultyPage = new FXMLLoader(getClass().getResource("selection-view.fxml"));
-            Parent difficultyParent = null;
 
             try {
-                difficultyParent = difficultyPage.load();
+                Parent difficultyParent = difficultyPage.load();
+                SelectionController difficultyController = difficultyPage.getController();
+                URL difficultyStyleSheet = difficultyController.getSelectionStylesheet();
+
+                //Changes scene to difficulty selection screen.
+                Scene currentScene = rootVbox.getScene();
+                if (difficultyStyleSheet != null) {
+                    currentScene.getStylesheets().add(difficultyStyleSheet.toString());
+                    currentScene.setRoot(difficultyParent);
+                    imageVbox.widthProperty().removeListener(imgVboxWidth);
+                }
             } catch (IOException e) {
                 System.out.println("Error loading Difficulty Page");
             }
-
-            //Changes scene to difficulty selection screen.
-            Scene currentScene = titleParentVbox.getScene();
-            currentScene.setRoot(difficultyParent);
-            imageVbox.widthProperty().removeListener(imgVboxWidth);
         }));
 
         return initializeProcess;

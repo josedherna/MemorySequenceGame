@@ -1,0 +1,74 @@
+#rootVbox {
+    -fx-background-color: #FFF0DB;
+}
+
+#headerHbox {
+    -fx-background-color: #CD3535;
+}
+
+#difficultyLabel {
+    -fx-text-fill: #FEFFFD;
+}
+
+#infoHbox {
+    -fx-background-color: #CD3535;
+}
+
+#infoLabel {
+    -fx-text-fill: #FEFFFD;
+}
+
+#middleInfoVbox {
+    -fx-background-color: #CD3535;
+}
+
+#textVbox {
+    -fx-background-color: #FFE9CB;
+}
+
+#buttonHbox {
+    -fx-background-color: #CD3535;
+}
+
+#scriptProgressbar {
+    -fx-accent: #1B2631;
+}
+
+#scriptProgressbar > .bar {
+    -fx-background-radius: 0;
+}
+
+#scriptProgressbar > .track {
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-background-color: #FEFFFD;
+}
+
+#backButton {
+    -fx-background-color: #FFF2EB;
+    -fx-border-color: #1B2631;
+    -fx-text-fill: #1B2631;
+    -fx-background-insets: 0px;
+    -fx-border-insets: -1px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3px;
+}
+#backButton:hover {
+    -fx-background-color: #FEFFFD;
+    -fx-border-color: #253642;
+}
+
+#startButton {
+    -fx-background-color: #1B2631;
+    -fx-border-color: #1B2631;
+    -fx-text-fill: #FEFFFD;
+    -fx-background-insets: 0px;
+    -fx-border-insets: -1px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3px;
+}
+
+#startButton:hover {
+    -fx-background-color: #141b24;
+    -fx-border-color: #141b24;
+}
