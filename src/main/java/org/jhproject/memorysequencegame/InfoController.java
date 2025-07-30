@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -51,6 +52,8 @@ public class InfoController {
     private VBox textVbox;
     @FXML
     private HBox buttonHbox;
+    @FXML
+    private ProgressBar scriptProgressbar;
 
     private final URL HEADER_FONT = getClass().getResource("fonts/Poppins-Bold.ttf");
     private final URL INFO_LABEL_FONT = getClass().getResource("fonts/Poppins-SemiBold.ttf");
@@ -62,6 +65,7 @@ public class InfoController {
 
     private Text[] instructionScript;
     private Timeline infoDisplay;
+    private String difficulty;
     private static final GameInstructions GAME_INSTRUCTIONS = new GameInstructions();
 
     private final ChangeListener<Number> headerHboxSizeListener = (_, _, newValue) -> {
@@ -134,8 +138,11 @@ public class InfoController {
         }
     }
 
+    /**
+     * Switches the current scene of the info screen to the game screen.
+     */
     @FXML
-    public void startGame() {
+    private void startGame() {
         FXMLLoader gameplayPage = new FXMLLoader(getClass().getResource("gameplay-view.fxml"));
 
         try {
@@ -161,6 +168,7 @@ public class InfoController {
      */
     protected void initializeEasyInfo(String language) {
         difficultyLabel.setText("Easy");
+        difficulty = "Easy";
         instructionScript = GAME_INSTRUCTIONS.getEasyInstructions(language);
     }
 
@@ -169,6 +177,7 @@ public class InfoController {
      */
     protected void initializeMediumInfo(String language) {
         difficultyLabel.setText("Medium");
+        difficulty = "Medium";
         instructionScript = GAME_INSTRUCTIONS.getMediumInstructions(language);
     }
 
@@ -177,6 +186,7 @@ public class InfoController {
      */
     protected void initializeHardInfo(String language) {
         difficultyLabel.setText("Hard");
+        difficulty = "Hard";
         instructionScript = GAME_INSTRUCTIONS.getHardInstructions(language);
     }
 
@@ -203,13 +213,17 @@ public class InfoController {
         Timeline timeline = new Timeline();
         for (int i = 0, j = 0; i < instructionScript.length && j < instructionScript.length * 4; i++, j += 4) {
             Text currentLine = instructionScript[i];
+            int finalJ = j;
             timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(j), _ -> {
                 if (!infoTextFlow.getChildren().isEmpty()) {
                     infoTextFlow.getChildren().clear();
                 }
                 infoTextFlow.getChildren().add(currentLine);
+                scriptProgressbar.setProgress(finalJ /24.0);
             }));
         }
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(24.0), _ -> scriptProgressbar.setProgress(1.0)));
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(24.5), _ -> startGame()));
         timeline.setCycleCount(1);
         return timeline;
     }
@@ -224,7 +238,7 @@ public class InfoController {
     }
 
     /**
-     * Gets the URL of the CSS stylesheet for the easy info screen.
+     * Gets the URL of the CSS stylesheet for the medium info screen.
      *
      * @return The URL of the CSS stylesheet for the medium info screen.
      */
@@ -233,6 +247,7 @@ public class InfoController {
     }
 
     /**
+     * Gets the URL of the CSS stylesheet for the hard info screen.
      *
      * @return The URL of the CSS stylesheet for the hard info screen.
      */

@@ -30,6 +30,20 @@
     -fx-background-color: #CD3535;
 }
 
+#scriptProgressbar {
+    -fx-accent: #1B2631;
+}
+
+#scriptProgressbar > .bar {
+    -fx-background-radius: 0;
+}
+
+#scriptProgressbar > .track {
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-background-color: #FEFFFD;
+}
+
 #backButton {
     -fx-background-color: #FFF2EB;
     -fx-border-color: #1B2631;

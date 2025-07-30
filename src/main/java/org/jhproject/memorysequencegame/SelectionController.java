@@ -37,6 +37,8 @@ public class SelectionController {
     private VBox buttonVbox;
     @FXML
     private Button settingsButton;
+    @FXML
+    private HBox settingsHbox;
 
     private final URL HEADER_FONT = getClass().getResource("fonts/Poppins-Bold.ttf");
     private final URL BUTTON_FONT = getClass().getResource("fonts/NunitoSans_7pt-SemiBold.ttf");
@@ -44,9 +46,10 @@ public class SelectionController {
 
     private final ChangeListener<Number> buttonSizeListener = (_, _, _) -> {
         if (BUTTON_FONT != null) {
-            easyButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
-            mediumButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
-            hardButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustButtonFontSize()));
+            easyButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustDifficultyButtonFontSize()));
+            mediumButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustDifficultyButtonFontSize()));
+            hardButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustDifficultyButtonFontSize()));
+            settingsButton.setFont(Font.loadFont(BUTTON_FONT.toString(), adjustSettingsButtonFontSize()));
         }
     };
 
@@ -67,10 +70,9 @@ public class SelectionController {
     private void initialize() {
         buttonVbox.heightProperty().addListener(buttonSizeListener);
         buttonVbox.widthProperty().addListener(buttonSizeListener);
+        settingsHbox.widthProperty().addListener(buttonSizeListener);
+        settingsHbox.heightProperty().addListener(buttonSizeListener);
         headerHbox.widthProperty().addListener(headerHboxSizeListener);
-        if (BUTTON_FONT != null) {
-            settingsButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 16.5));
-        }
     }
 
     /**
@@ -92,6 +94,8 @@ public class SelectionController {
                 currentScene.setRoot(easyInfoParent);
                 buttonVbox.heightProperty().removeListener(buttonSizeListener);
                 buttonVbox.widthProperty().removeListener(buttonSizeListener);
+                settingsHbox.heightProperty().removeListener(buttonSizeListener);
+                settingsHbox.widthProperty().removeListener(buttonSizeListener);
                 headerHbox.widthProperty().removeListener(headerHboxSizeListener);
             }
         } catch (IOException e) {
@@ -118,6 +122,8 @@ public class SelectionController {
                 currentScene.setRoot(mediumInfoParent);
                 buttonVbox.heightProperty().removeListener(buttonSizeListener);
                 buttonVbox.widthProperty().removeListener(buttonSizeListener);
+                settingsHbox.heightProperty().removeListener(buttonSizeListener);
+                settingsHbox.widthProperty().removeListener(buttonSizeListener);
                 headerHbox.widthProperty().removeListener(headerHboxSizeListener);
             }
         } catch (IOException e) {
@@ -144,6 +150,8 @@ public class SelectionController {
                 currentScene.setRoot(hardInfoParent);
                 buttonVbox.heightProperty().removeListener(buttonSizeListener);
                 buttonVbox.widthProperty().removeListener(buttonSizeListener);
+                settingsHbox.heightProperty().removeListener(buttonSizeListener);
+                settingsHbox.widthProperty().removeListener(buttonSizeListener);
                 headerHbox.widthProperty().removeListener(headerHboxSizeListener);
             }
         } catch (IOException e) {
@@ -156,9 +164,20 @@ public class SelectionController {
      *
      * @return The new font size for the text in the difficulty buttons.
      */
-    private double adjustButtonFontSize() {
+    private double adjustDifficultyButtonFontSize() {
         double newFontSizeHeight = buttonVbox.getHeight() / 12.5;
         double newFontSizeWidth = buttonVbox.getWidth() / 9.5;
+        return Math.min(newFontSizeHeight, newFontSizeWidth);
+    }
+
+    /**
+     * Calculates the new font size for the buttons based on the width and height of the settingsHbox.
+     *
+     * @return The new font size for the text in the settings button.
+     */
+    private double adjustSettingsButtonFontSize() {
+        double newFontSizeHeight = settingsHbox.getHeight() / 3.5;
+        double newFontSizeWidth = settingsHbox.getWidth() / 12.5;
         return Math.min(newFontSizeHeight, newFontSizeWidth);
     }
 
