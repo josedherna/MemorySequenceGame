@@ -28,14 +28,14 @@
          <padding>
             <Insets left="40.0" right="40.0" />
          </padding>
-         <HBox fx:id="infoHbox" alignment="CENTER" maxHeight="100.0" maxWidth="800.0" minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0">
+         <HBox alignment="CENTER" maxHeight="100.0" maxWidth="800.0" minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" styleClass="info_container">
             <Label fx:id="infoLabel" text="Info" textFill="WHITE">
                <font>
                   <Font size="23.0" />
                </font>
             </Label>
          </HBox>
-         <VBox fx:id="middleInfoVbox" maxHeight="300.0" maxWidth="800.0" minHeight="150.0" prefHeight="300.0" prefWidth="520.0" spacing="3.0" VBox.vgrow="ALWAYS">
+         <VBox maxHeight="300.0" maxWidth="800.0" minHeight="150.0" prefHeight="300.0" prefWidth="520.0" spacing="3.0" styleClass="info_container" VBox.vgrow="ALWAYS">
             <padding>
                <Insets bottom="7.0" left="15.0" right="15.0" />
             </padding>
@@ -47,7 +47,7 @@
             </VBox>
             <ProgressBar fx:id="scriptProgressbar" maxWidth="1.7976931348623157E308" minHeight="12.0" prefWidth="200.0" progress="0.0" />
          </VBox>
-         <HBox fx:id="buttonHbox" alignment="TOP_CENTER" maxHeight="100.0" maxWidth="800.0" minHeight="-Infinity" prefHeight="55.0" prefWidth="520.0">
+         <HBox alignment="TOP_CENTER" maxHeight="100.0" maxWidth="800.0" minHeight="-Infinity" prefHeight="55.0" prefWidth="520.0" styleClass="info_container">
             <padding>
                <Insets bottom="7.0" />
             </padding>

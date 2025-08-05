@@ -29,15 +29,10 @@ import java.net.URL;
  * @author Jose Hernandez
  */
 public class InfoController {
-
-    @FXML
-    private VBox middleInfoVbox;
     @FXML
     private Label infoLabel;
     @FXML
     private Label difficultyLabel;
-    @FXML
-    private HBox infoHbox;
     @FXML
     private Button backButton;
     @FXML
@@ -50,8 +45,6 @@ public class InfoController {
     private TextFlow infoTextFlow;
     @FXML
     private VBox textVbox;
-    @FXML
-    private HBox buttonHbox;
     @FXML
     private ProgressBar scriptProgressbar;
 
@@ -147,8 +140,32 @@ public class InfoController {
 
         try {
             Parent gameplayParent = gameplayPage.load();
+            GameplayController gameplayController = gameplayPage.getController();
             Scene currentScene = rootVbox.getScene();
-            currentScene.setRoot(gameplayParent);
+
+            switch(difficulty) {
+                case "Easy" -> {
+                    URL easyStyleSheet = gameplayController.getEasyStyleSheet();
+                    if (easyStyleSheet != null) {
+                        gameplayParent.getStylesheets().add(easyStyleSheet.toString());
+                        currentScene.setRoot(gameplayParent);
+                    }
+                }
+                case "Medium" -> {
+                    URL mediumStyleSheet = gameplayController.getMediumStyleSheet();
+                    if (mediumStyleSheet != null) {
+                        gameplayParent.getStylesheets().add(mediumStyleSheet.toString());
+                        currentScene.setRoot(gameplayParent);
+                    }
+                }
+                case "Hard" -> {
+                    URL hardStyleSheet = gameplayController.getHardStyleSheet();
+                    if (hardStyleSheet != null) {
+                        gameplayParent.getStylesheets().add(hardStyleSheet.toString());
+                        currentScene.setRoot(gameplayParent);
+                    }
+                }
+            }
 
             if (infoDisplay.getStatus() == Animation.Status.RUNNING) {
                 infoDisplay.stop();

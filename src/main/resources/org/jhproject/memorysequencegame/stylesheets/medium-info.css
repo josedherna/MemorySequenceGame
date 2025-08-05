@@ -10,7 +10,7 @@
     -fx-text-fill: #242323;
 }
 
-#infoHbox {
+.info_container {
     -fx-background-color: #FBD82D;
 }
 
@@ -18,16 +18,8 @@
     -fx-text-fill: #242323;
 }
 
-#middleInfoVbox {
-    -fx-background-color: #FBD82D;
-}
-
 #textVbox {
     -fx-background-color: #FFF4CB;
-}
-
-#buttonHbox {
-    -fx-background-color: #FBD82D;
 }
 
 #scriptProgressbar {

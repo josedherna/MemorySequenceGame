@@ -1,0 +1,59 @@
+.root_container {
+    -fx-background-color: #FDFFDB;
+}
+
+.header_container {
+    -fx-background-color: #242323;
+}
+
+#timerBar {
+    -fx-accent: #242323;
+}
+
+#timerBar > .bar {
+    -fx-background-radius: 0;
+}
+
+#timerBar > .track {
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-background-color: #FDFFDB;
+}
+
+#tileVbox {
+    -fx-background-color: #FBD82D;
+}
+
+.pause_button {
+    -fx-background-color: #FFF4CB;
+    -fx-background-radius: 0px;
+}
+
+.pause_button:hover {
+    -fx-background-color: #FFF4E0;
+}
+
+.side_containers {
+    -fx-background-color: #FBD82D;
+}
+
+.score_container {
+    -fx-background-color: #FFF4CB;
+
+}
+
+#scoreLabel {
+    -fx-text-fill: #242323;
+}
+
+#currentScoreLabel {
+    -fx-text-fill: #242323;
+}
+
+#bestScoreDisplayLabel {
+    -fx-text-fill: #242323;
+}
+
+#bestScoreLabel {
+    -fx-text-fill: #242323;
+}
