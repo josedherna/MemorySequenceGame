@@ -33,6 +33,10 @@
     -fx-background-color: #FFF4E0;
 }
 
+.countdown {
+    -fx-text-fill: #242323;
+}
+
 .side_containers {
     -fx-background-color: #FBD82D;
 }
