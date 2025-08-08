@@ -59,6 +59,7 @@ public class InfoController {
     private Text[] instructionScript;
     private Timeline infoDisplay;
     private String difficulty;
+
     private static final GameInstructions GAME_INSTRUCTIONS = new GameInstructions();
 
     private final ChangeListener<Number> headerHboxSizeListener = (_, _, newValue) -> {
@@ -66,7 +67,7 @@ public class InfoController {
             difficultyLabel.setFont(Font.loadFont(HEADER_FONT.toString(), headerHbox.getWidth() / 9.7));
         }
         else if (newValue.doubleValue() > 480.0 && HEADER_FONT != null) {
-            difficultyLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
+            difficultyLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50.0));
         }
     };
 
@@ -83,12 +84,12 @@ public class InfoController {
     @FXML
     private void initialize() {
         if (INFO_LABEL_FONT != null) {
-            infoLabel.setFont(Font.loadFont(INFO_LABEL_FONT.toString(), 24));
+            infoLabel.setFont(Font.loadFont(INFO_LABEL_FONT.toString(), 24.0));
         }
 
         if (BUTTON_FONT != null) {
-            backButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 18));
-            startButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 18));
+            backButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 18.0));
+            startButton.setFont(Font.loadFont(BUTTON_FONT.toString(), 18.0));
         }
         headerHbox.widthProperty().addListener(headerHboxSizeListener);
         textVbox.widthProperty().addListener(textVboxListener);
@@ -148,6 +149,7 @@ public class InfoController {
                     URL easyStyleSheet = gameplayController.getEasyStyleSheet();
                     if (easyStyleSheet != null) {
                         gameplayParent.getStylesheets().add(easyStyleSheet.toString());
+                        gameplayController.initializeEasyGame();
                         currentScene.setRoot(gameplayParent);
                     }
                 }
@@ -155,6 +157,7 @@ public class InfoController {
                     URL mediumStyleSheet = gameplayController.getMediumStyleSheet();
                     if (mediumStyleSheet != null) {
                         gameplayParent.getStylesheets().add(mediumStyleSheet.toString());
+                        gameplayController.initializeMediumGame();
                         currentScene.setRoot(gameplayParent);
                     }
                 }
@@ -162,6 +165,7 @@ public class InfoController {
                     URL hardStyleSheet = gameplayController.getHardStyleSheet();
                     if (hardStyleSheet != null) {
                         gameplayParent.getStylesheets().add(hardStyleSheet.toString());
+                        gameplayController.initializeHardGame();
                         currentScene.setRoot(gameplayParent);
                     }
                 }
@@ -213,10 +217,10 @@ public class InfoController {
      * @return The new font size of the text displayed.
      */
     private double adjustInfoFontSize() {
-        double textVboxWidth = textVbox.getWidth() - 20;
+        double textVboxWidth = textVbox.getWidth() - 20.0;
         double textVboxHeight = textVbox.getHeight();
         double textVboxArea = textVboxWidth * textVboxHeight;
-        double initialFontSize = textVboxArea / 148;
+        double initialFontSize = textVboxArea / 148.0;
         return Math.sqrt(initialFontSize);
     }
 
@@ -236,7 +240,7 @@ public class InfoController {
                     infoTextFlow.getChildren().clear();
                 }
                 infoTextFlow.getChildren().add(currentLine);
-                scriptProgressbar.setProgress(finalJ /24.0);
+                scriptProgressbar.setProgress(finalJ / 24.0);
             }));
         }
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(24.0), _ -> scriptProgressbar.setProgress(1.0)));

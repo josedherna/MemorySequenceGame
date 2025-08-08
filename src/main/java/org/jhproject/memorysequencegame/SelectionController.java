@@ -58,7 +58,7 @@ public class SelectionController {
             headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), headerHbox.getWidth() / 9.7));
         }
         else if (newValue.doubleValue() > 480.0 && HEADER_FONT != null) {
-            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50));
+            headerLabel.setFont(Font.loadFont(HEADER_FONT.toString(), 50.0));
         }
     };
 
