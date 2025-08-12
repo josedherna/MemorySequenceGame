@@ -24,6 +24,20 @@
     -fx-background-color: #4CAF50;
 }
 
+.easy_tile {
+    -fx-background-color: #F9FFCB;
+    -fx-background-radius: 0px;
+}
+
+.easy_tile:hover {
+    -fx-background-color: #FFFEE0;
+}
+
+.easy_tile:disabled {
+    -fx-background-color: #F9FFCB;
+    -fx-opacity: 1.0;
+}
+
 .pause_button {
     -fx-background-color: #F9FFCB;
     -fx-background-radius: 0px;

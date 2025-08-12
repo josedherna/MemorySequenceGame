@@ -1,5 +1,6 @@
 package org.jhproject.memorysequencegame;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
 /**
@@ -9,5 +10,22 @@ import javafx.scene.control.Button;
  * @author Jose Hernandez
  */
 public class Tiles extends Button {
+    private final int[] COORDINATES;
 
+    Tiles(int[] values, String styleClass) {
+        COORDINATES = values;
+        this.getStyleClass().add(styleClass);
+        this.setAlignment(Pos.CENTER);
+        this.setMaxWidth(Double.MAX_VALUE);
+        this.setMaxHeight(Double.MAX_VALUE);
+    }
+
+    /**
+     * Gets the coordinates of the tile in the grid pane.
+     *
+     * @return An array containing the coordinate of the tiles in the grid pane.
+     */
+    protected int[] getCoordinates() {
+        return COORDINATES;
+    }
 }

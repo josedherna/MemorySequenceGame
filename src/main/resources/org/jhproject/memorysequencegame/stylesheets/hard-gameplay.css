@@ -24,6 +24,20 @@
     -fx-background-color: #CD3535;
 }
 
+.hard_tile {
+    -fx-background-color: #FFE9CB;
+    -fx-background-radius: 0px;
+}
+
+.hard_tile:hover {
+    -fx-background-color: #FCECDC;
+}
+
+.hard_tile:disabled {
+    -fx-background-color: #FFE9CB;
+    -fx-opacity: 1.0;
+}
+
 .pause_button {
     -fx-background-color: #FFE9CB;
     -fx-background-radius: 0px;

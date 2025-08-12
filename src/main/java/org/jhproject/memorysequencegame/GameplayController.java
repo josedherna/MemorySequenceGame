@@ -156,7 +156,7 @@ public class GameplayController {
             easyGridpane.getRowConstraints().add(rowConstraints);
         }
 
-        easyGridpane.setGridLinesVisible(true);
+        generateEasyTiles(easyGridpane);
     }
 
     /**
@@ -182,7 +182,7 @@ public class GameplayController {
             mediumGridpane.getRowConstraints().add(rowConstraints);
         }
 
-        mediumGridpane.setGridLinesVisible(true);
+        generateMediumTiles(mediumGridpane);
     }
 
     /**
@@ -208,7 +208,63 @@ public class GameplayController {
             hardGridpane.getRowConstraints().add(rowConstraints);
         }
 
-        hardGridpane.setGridLinesVisible(true);
+        generateHardTiles(hardGridpane);
+    }
+
+    /**
+     * Generates the tiles displayed in the easy difficulty.
+     *
+     * @param currentGridPane The grid pane where the tiles are going to be added.
+     */
+    private void generateEasyTiles(GridPane currentGridPane) {
+        Tiles[][] generatedEasyTiles = new Tiles[3][3];
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                Tiles generated = new Tiles(new int[]{i, j}, "easy_tile");
+                //For debugging purpose, the indices of the tiles are visible
+                generated.setText(i + "," + j);
+
+                generatedEasyTiles[i][j] = generated;
+                currentGridPane.add(generated, i, j);
+            }
+        }
+    }
+
+    /**
+     * Generates the tiles displayed in the medium difficulty.
+     *
+     * @param currentGridPane The grid pane where the tiles are going to be added.
+     */
+    private void generateMediumTiles(GridPane currentGridPane) {
+        Tiles[][] generatedMediumTiles = new Tiles[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                Tiles generated = new Tiles(new int[]{i, j}, "medium_tile");
+                generated.setText(i + "," + j);
+
+                generatedMediumTiles[i][j] = generated;
+                currentGridPane.add(generated, i, j);
+            }
+        }
+    }
+
+    /**
+     * Generates the tiles displayed in the hard difficulty.
+     *
+     * @param currentGridPane The grid pane where the tiles are going to be added.
+     */
+    private void generateHardTiles(GridPane currentGridPane) {
+        Tiles[][] generatedHardTiles = new Tiles[5][5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                Tiles generated = new Tiles(new int[]{i, j}, "hard_tile");
+                generated.setText(i + "," + j);
+
+                generatedHardTiles[i][j] = generated;
+                currentGridPane.add(generated, i, j);
+            }
+        }
     }
 
     /**
