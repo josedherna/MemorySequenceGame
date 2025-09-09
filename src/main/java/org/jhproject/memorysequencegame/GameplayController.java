@@ -2,16 +2,22 @@ package org.jhproject.memorysequencegame;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This class contains methods that will provide functionality to the GUI elements of the gameplay.
@@ -20,11 +26,15 @@ import java.net.URL;
  */
 public class GameplayController {
     @FXML
+    private VBox rootVbox;
+    @FXML
     private Label scoreLabel;
     @FXML
     private ImageView pauseImageView;
     @FXML
     private ProgressBar timerBar;
+    @FXML
+    private Button pauseButton;
     @FXML
     private Label bestScoreLabel;
     @FXML
@@ -44,6 +54,8 @@ public class GameplayController {
     private final URL HARD_STYLE_SHEET = getClass().getResource("stylesheets/hard-gameplay.css");
 
     private String difficulty;
+    private Game currentGame;
+    private int index = 0;
 
     private GridPane easyGridpane;
     private GridPane mediumGridpane;
@@ -55,7 +67,7 @@ public class GameplayController {
     @FXML
     private void initialize() {
         if (SCORE_FONT != null) {
-            currentScoreLabel.setFont(Font.loadFont(SCORE_FONT.toString(), 50));
+            currentScoreLabel.setFont(Font.loadFont(SCORE_FONT.toString(), 42));
             bestScoreDisplayLabel.setFont(Font.loadFont(SCORE_FONT.toString(), 30));
         }
 
@@ -70,6 +82,12 @@ public class GameplayController {
 
         startCountdown();
     }
+
+    private ChangeListener<Boolean> readState = (_,_, newValue) -> {
+        if (newValue) {
+            displayTileSelection();
+        }
+    };
 
     /**
      * Starts the countdown that will start the game.
@@ -123,7 +141,10 @@ public class GameplayController {
             tileVbox.getChildren().remove(countdownLabel);
 
             switch(difficulty) {
-                case "Easy" -> tileVbox.getChildren().add(easyGridpane);
+                case "Easy" -> {
+                    tileVbox.getChildren().add(easyGridpane);
+                    startGame();
+                }
                 case "Medium" -> tileVbox.getChildren().add(mediumGridpane);
                 case "Hard" -> tileVbox.getChildren().add(hardGridpane);
             }
@@ -131,6 +152,78 @@ public class GameplayController {
         timeline.setCycleCount(1);
 
         return timeline;
+    }
+
+    /**
+     *
+     */
+    private void startGame() {
+        if (Objects.equals(difficulty, "Easy") && !currentGame.isRunning()) {
+            Scene currentScene = rootVbox.getScene();
+            Stage currentStage = (Stage) currentScene.getWindow();
+
+            currentStage.setOnCloseRequest((_) -> endGame());
+
+            currentScoreLabel.textProperty().bind(currentGame.displayScore());
+            currentGame.readTileSelection().addListener(readState);
+            timerBar.progressProperty().bind(currentGame.getTimeProgress());
+            Thread easyGame = new Thread(currentGame);
+            easyGame.start();
+        }
+    }
+
+    /**
+     * Ends the game at any point in time.
+     */
+    private void endGame() {
+        currentGame.setRunning(false);
+    }
+
+    /**
+     * Displays the tiles that were selected by the game.
+     */
+    private void displayTileSelection() {
+        ArrayList<int[]> tileSelection = currentGame.getTileSelection();
+        Timeline tileSelectionTimeline = getTileDisplayTimeline(tileSelection);
+        tileSelectionTimeline.play();
+    }
+
+    /**
+     * Creates and gets a timeline that will display the tile selection sequence that the player
+     * has to memorize.
+     *
+     * @param tileSelection A list of tile coordinates in a sequence that will be displayed.
+     * @return A timeline that displays the tile selection.
+     */
+    private Timeline getTileDisplayTimeline(ArrayList<int[]> tileSelection) {
+        index = 0;
+        Timeline tileDisplayTimeline = new Timeline();
+        switch(difficulty) {
+            case "Easy" -> {
+                tileDisplayTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), _ -> {
+                    int[] tile = tileSelection.get(index);
+                    Tiles currentTile = currentGame.getGameTiles()[tile[0]][tile[1]];
+                    currentTile.getStyleClass().remove("easy_tile");
+                    currentTile.getStyleClass().add("easy_tile_selected");
+                }));
+                tileDisplayTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0), _ -> {
+                    int[] tile = tileSelection.get(index);
+                    Tiles currentTile = currentGame.getGameTiles()[tile[0]][tile[1]];
+                    currentTile.getStyleClass().remove("easy_tile_selected");
+                    currentTile.getStyleClass().add("easy_tile");
+                    index += 1;
+                    if (index == currentGame.getSelectionAmountIndex() + 1) {
+                        currentGame.setReadTileSelection(false);
+                        currentGame.setPlayerTurn(true);
+                        currentGame.setDisabledTiles(false);
+                    }
+                }));
+            }
+            case "Medium" -> {
+            }
+        }
+        tileDisplayTimeline.setCycleCount(currentGame.getSelectionAmountIndex() + 1);
+        return tileDisplayTimeline;
     }
 
     /**
@@ -218,17 +311,22 @@ public class GameplayController {
      */
     private void generateEasyTiles(GridPane currentGridPane) {
         Tiles[][] generatedEasyTiles = new Tiles[3][3];
+        currentGame = new EasyGame(generatedEasyTiles);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 Tiles generated = new Tiles(new int[]{i, j}, "easy_tile");
                 //For debugging purpose, the indices of the tiles are visible
                 generated.setText(i + "," + j);
+                generated.setOnAction(_ -> currentGame.validatePlayerSelection(generated.getCoordinates()[0], generated.getCoordinates()[1]));
+                generated.disableProperty().bind(currentGame.disabledTiles());
 
                 generatedEasyTiles[i][j] = generated;
-                currentGridPane.add(generated, i, j);
+                currentGridPane.add(generated, j, i);
             }
         }
+
+        pauseButton.setOnAction(_ -> currentGame.testTileTurn());
     }
 
     /**
@@ -242,11 +340,14 @@ public class GameplayController {
             for (int j = 0; j < 4; j++) {
                 Tiles generated = new Tiles(new int[]{i, j}, "medium_tile");
                 generated.setText(i + "," + j);
+                generated.disableProperty().bind(currentGame.disabledTiles());
 
                 generatedMediumTiles[i][j] = generated;
-                currentGridPane.add(generated, i, j);
+                currentGridPane.add(generated, j, i);
             }
         }
+
+        //currentGame = new Game(generatedMediumTiles);
     }
 
     /**
@@ -260,11 +361,14 @@ public class GameplayController {
             for (int j = 0; j < 5; j++) {
                 Tiles generated = new Tiles(new int[]{i, j}, "hard_tile");
                 generated.setText(i + "," + j);
+                generated.disableProperty().bind(currentGame.disabledTiles());
 
                 generatedHardTiles[i][j] = generated;
-                currentGridPane.add(generated, i, j);
+                currentGridPane.add(generated, j, i);
             }
         }
+
+        //currentGame = new Game(generatedHardTiles);
     }
 
     /**
