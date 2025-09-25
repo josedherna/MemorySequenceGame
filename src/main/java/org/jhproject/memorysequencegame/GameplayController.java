@@ -145,7 +145,10 @@ public class GameplayController {
                     tileVbox.getChildren().add(easyGridpane);
                     startGame();
                 }
-                case "Medium" -> tileVbox.getChildren().add(mediumGridpane);
+                case "Medium" -> {
+                    tileVbox.getChildren().add(mediumGridpane);
+                    startGame();
+                }
                 case "Hard" -> tileVbox.getChildren().add(hardGridpane);
             }
         }));
@@ -169,6 +172,19 @@ public class GameplayController {
             timerBar.progressProperty().bind(currentGame.getTimeProgress());
             Thread easyGame = new Thread(currentGame);
             easyGame.start();
+        }
+
+        if (Objects.equals(difficulty, "Medium") && !currentGame.isRunning()) {
+            Scene currentScene = rootVbox.getScene();
+            Stage currentStage = (Stage) currentScene.getWindow();
+
+            currentStage.setOnCloseRequest((_) -> endGame());
+
+            currentScoreLabel.textProperty().bind(currentGame.displayScore());
+            currentGame.readTileSelection().addListener(readState);
+            timerBar.progressProperty().bind(currentGame.getTimeProgress());
+            Thread mediumGame = new Thread(currentGame);
+            mediumGame.start();
         }
     }
 
@@ -220,6 +236,24 @@ public class GameplayController {
                 }));
             }
             case "Medium" -> {
+                tileDisplayTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), _ -> {
+                    int[] tile = tileSelection.get(index);
+                    Tiles currentTile = currentGame.getGameTiles()[tile[0]][tile[1]];
+                    currentTile.getStyleClass().remove("medium_tile");
+                    currentTile.getStyleClass().add("medium_tile_selected");
+                }));
+                tileDisplayTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0), _ -> {
+                    int[] tile = tileSelection.get(index);
+                    Tiles currentTile = currentGame.getGameTiles()[tile[0]][tile[1]];
+                    currentTile.getStyleClass().remove("medium_tile_selected");
+                    currentTile.getStyleClass().add("medium_tile");
+                    index += 1;
+                    if (index == currentGame.getSelectionAmountIndex() + 1) {
+                        currentGame.setReadTileSelection(false);
+                        currentGame.setPlayerTurn(true);
+                        currentGame.setDisabledTiles(false);
+                    }
+                }));
             }
         }
         tileDisplayTimeline.setCycleCount(currentGame.getSelectionAmountIndex() + 1);
@@ -325,8 +359,6 @@ public class GameplayController {
                 currentGridPane.add(generated, j, i);
             }
         }
-
-        pauseButton.setOnAction(_ -> currentGame.testTileTurn());
     }
 
     /**
@@ -336,18 +368,19 @@ public class GameplayController {
      */
     private void generateMediumTiles(GridPane currentGridPane) {
         Tiles[][] generatedMediumTiles = new Tiles[4][4];
+        currentGame = new MediumGame(generatedMediumTiles);
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 Tiles generated = new Tiles(new int[]{i, j}, "medium_tile");
                 generated.setText(i + "," + j);
+                generated.setOnAction(_ -> currentGame.validatePlayerSelection(generated.getCoordinates()[0], generated.getCoordinates()[1]));
                 generated.disableProperty().bind(currentGame.disabledTiles());
 
                 generatedMediumTiles[i][j] = generated;
                 currentGridPane.add(generated, j, i);
             }
         }
-
-        //currentGame = new Game(generatedMediumTiles);
     }
 
     /**

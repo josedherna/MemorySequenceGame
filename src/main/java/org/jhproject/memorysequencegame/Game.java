@@ -36,7 +36,7 @@ public abstract class Game implements Runnable {
     protected abstract void playerTurn();
     protected abstract void validatePlayerSelection(int col, int row);
     protected abstract void gameOver();
-    protected abstract void testTileTurn();
+    protected abstract void increaseLevel();
     protected abstract Map<String, List<List<int[]>>> generatePatterns();
 
     /**
@@ -49,10 +49,10 @@ public abstract class Game implements Runnable {
             this.currentScoreLabel.set(Integer.toString((int)score));
         }
         else if (score >= 10000.0 && score < 1000000.0) {
-            this.currentScoreLabel.set((score/10000) + "K");
+            this.currentScoreLabel.set((score/1000.0) + "K");
         }
         else if (score >= 1000000.0 && score < 1000000000.0) {
-            this.currentScoreLabel.set((score/100000.0) + "M");
+            this.currentScoreLabel.set((score/10000.0) + "M");
         }
 
         return this.currentScoreLabel;

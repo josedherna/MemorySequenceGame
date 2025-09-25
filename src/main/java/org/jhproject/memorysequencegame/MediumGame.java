@@ -3,26 +3,26 @@ package org.jhproject.memorysequencegame;
 import java.util.*;
 
 /**
- * This class contains methods that will manage the easy difficulty gameplay and all the processes of
+ * This class contains methods that will manage the medium difficulty gameplay and all the processes of
  * selecting tiles to display and validating the player's input.
  *
  * @author Jose Hernandez
  */
-public class EasyGame extends Game {
+public class MediumGame extends Game {
     private final Tiles[][] GAME_TILES;
     private final ArrayList<int[]> SELECTION_PATTERN;
     private final ArrayList<String> SELECTION_CATEGORY;
 
-    EasyGame(Tiles[][] currentBoard) {
+    MediumGame(Tiles[][] currentBoard) {
         GAME_TILES = currentBoard;
         SELECTION_PATTERN = new ArrayList<>();
         SELECTION_CATEGORY = new ArrayList<>();
         setDisabledTiles(true);
-        setSelectionAmountIndex(2);
+        setSelectionAmountIndex(3);
     }
 
     /**
-     * Runs the game.
+     * Runs this operation.
      */
     @Override
     public void run() {
@@ -64,69 +64,68 @@ public class EasyGame extends Game {
     @Override
     protected Map<String, List<List<int[]>>> generatePatterns() {
         Map<String, List<List<int[]>>> patternMap = new HashMap<>();
-
         patternMap.put("Horizontal", new ArrayList<>());
         patternMap.put("Vertical", new ArrayList<>());
         patternMap.put("Diagonal", new ArrayList<>());
-        patternMap.put("LBottomTriangle" , new ArrayList<>());
-        patternMap.put("LTopTriangle" , new ArrayList<>());
-        patternMap.put("RBottomTriangle" , new ArrayList<>());
-        patternMap.put("RTopTriangle" , new ArrayList<>());
+        patternMap.put("LSideTriangle", new ArrayList<>());
+        patternMap.put("RSideTriangle", new ArrayList<>());
+        patternMap.put("TopSideTriangle", new ArrayList<>());
+        patternMap.put("BottomSideTriangle", new ArrayList<>());
 
         //Horizontal line patterns
-        for (int row = 0; row < 3; row++) {
+        for (int row = 0; row < 4; row++) {
             patternMap.get("Horizontal").add(Arrays.asList(
-                    new int[] {row, 0}, new int[] {row, 1}, new int[] {row, 2}
+                    new int[] {row, 0}, new int[] {row, 1}, new int[] {row, 2}, new int[] {row, 3}
             ));
         }
 
         //Vertical line patterns
-        for (int column = 0; column < 3; column++) {
+        for (int column = 0; column < 4; column++) {
             patternMap.get("Vertical").add(Arrays.asList(
-                    new int[] {0, column}, new int[] {1, column}, new int[] {2, column}
+                    new int[] {0, column}, new int[] {1, column}, new int[] {2, column}, new int[] {3, column}
             ));
         }
 
         //Diagonal patterns
         patternMap.get("Diagonal").add(Arrays.asList(
-                new int[]{0, 0}, new int[]{1, 1}, new int[]{2, 2}
+                new int[]{0, 0}, new int[]{1, 1}, new int[]{2, 2}, new int[]{3, 3}
         ));
         patternMap.get("Diagonal").add(Arrays.asList(
-                new int[]{0, 2}, new int[]{1, 1}, new int[]{2, 0}
+                new int[]{0, 3}, new int[]{1, 2}, new int[]{2, 1}, new int[]{3, 0}
         ));
 
-        //Left bottom base triangle patterns
-        for (int row = 0; row < 2; row++) {
-            for (int column = 0; column < 2; column++) {
-                patternMap.get("LBottomTriangle").add(Arrays.asList(
-                        new int[] {row, column}, new int[] {row + 1, column}, new int[] {row + 1, column + 1}
+        //Left side triangle patterns
+        for (int column = 0; column < 3; column++) {
+            for (int row = 0; row < 2; row++) {
+                patternMap.get("LSideTriangle").add(Arrays.asList(
+                        new int[]{row, column}, new int[] {row + 1, column}, new int[] {row + 2, column}, new int[] {row + 1, column + 1}
                 ));
             }
         }
 
-        //Left top base triangle patterns
-        for (int row = 0; row < 2; row++) {
-            for (int column = 0; column < 2; column++) {
-                patternMap.get("LBottomTriangle").add(Arrays.asList(
-                        new int[] {row, column}, new int[] {row, column + 1}, new int[] {row + 1, column}
+        //Right side triangle patterns
+        for (int column = 1; column < 4; column++) {
+            for (int row = 0; row < 2; row++) {
+                patternMap.get("RSideTriangle").add(Arrays.asList(
+                        new int[]{row, column}, new int[]{row + 1, column}, new int[]{row + 2, column}, new int[]{row + 1, column - 1}
                 ));
             }
         }
 
-        //Right bottom base triangle pattern
-        for (int row = 0; row < 2; row++) {
-            for (int column = 2; column > 0; column--) {
-                patternMap.get("RBottomTriangle").add(Arrays.asList(
-                        new int[] {row, column}, new int[] {row + 1, column}, new int[] {row + 1, column - 1}
+        //Top side triangle patterns
+        for (int column = 0; column < 2; column++) {
+            for (int row = 0; row < 3; row++) {
+                patternMap.get("TopSideTriangle").add(Arrays.asList(
+                        new int[]{row, column}, new int[]{row, column + 1}, new int[]{row, column + 2}, new int[]{row + 1, column + 1}
                 ));
             }
         }
 
-        //Right top base triangle pattern
-        for (int row = 0; row < 2; row++) {
-            for (int column = 2; column > 0; column--) {
-                patternMap.get("RTopTriangle").add(Arrays.asList(
-                        new int[] {row, column}, new int[] {row, column - 1}, new int[] {row + 1, column}
+        //Bottom side triangle patterns
+        for (int column = 0; column < 2; column++) {
+            for (int row = 1; row < 4; row++) {
+                patternMap.get("BottomSideTriangle").add(Arrays.asList(
+                        new int[]{row, column}, new int[]{row, column + 1}, new int[]{row, column + 2}, new int[]{row - 1, column + 1}
                 ));
             }
         }
@@ -190,8 +189,8 @@ public class EasyGame extends Game {
             Random random = new Random();
 
             while (!patternsByCategory.isEmpty()) {
-                List<String> easyPatternCategories = new ArrayList<>(patternsByCategory.keySet());
-                String category = easyPatternCategories.get(random.nextInt(easyPatternCategories.size()));
+                List<String> mediumPatternCategories = new ArrayList<>(patternsByCategory.keySet());
+                String category = mediumPatternCategories.get(random.nextInt(mediumPatternCategories.size()));
 
                 List<List<int[]>> availableTiles = new ArrayList<>();
                 for (List<int[]> pattern : patternsByCategory.get(category)) {
@@ -281,7 +280,7 @@ public class EasyGame extends Game {
      */
     @Override
     protected void incrementScore() {
-        this.setScore(this.getScore() + 50.0);
+        this.setScore(this.getScore() + 100.0);
     }
 
     /**
@@ -323,11 +322,11 @@ public class EasyGame extends Game {
             setSelectionTurn(true);
 
             setLevel(getLevel() + 1);
-            if (getLevel() > 3 && getLevel() <= 6) {
-                setSelectionAmountIndex(5);
+            if (getLevel() > 4 && getLevel() <= 8) {
+                setSelectionAmountIndex(7);
             }
-            else if (getLevel() > 6) {
-                setSelectionAmountIndex(8);
+            else if (getLevel() > 8) {
+                setSelectionAmountIndex(11);
             }
         }
     }

@@ -24,6 +24,17 @@
     -fx-background-color: #FBD82D;
 }
 
+.medium_tile_selected {
+    -fx-background-color: #242323;
+    -fx-background-radius: 0px;
+}
+
+.medium_tile_selected:disabled {
+    -fx-background-color: #242323;
+    -fx-background-radius: 0px;
+    -fx-opacity: 1.0;
+}
+
 .medium_tile {
     -fx-background-color: #FFF4CB;
     -fx-background-radius: 0px;
